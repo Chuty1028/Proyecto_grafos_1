@@ -1,5 +1,6 @@
 import pandas as pd
 import networkx as nx
+import matplotlib.pyplot as plt
 
 # Leemos el archivo que ya dejó listo limpieza.py:
 # solo los pases completados de los 3 partidos de fase de grupos
@@ -32,3 +33,53 @@ print()
 print("Lista de jugadores:")
 for jugador in sorted(grafo_pases.nodes()):
     print(" -", jugador)
+
+# VISUALIZACION: dibujamos el grafo para poder presentarlo en clase
+
+# El grado de un nodo es con cuantos companeros distintos esta conectado.
+# Lo usamos para el tamano del circulo: mientras mas conectado esta un
+# jugador, mas grande se ve en el dibujo.
+grados_por_jugador = dict(grafo_pases.degree())
+tamanos_de_nodos = [grados_por_jugador[jugador] * 70 for jugador in grafo_pases.nodes()]
+
+# spring_layout acomoda los nodos solo: los jugadores que se pasan entre
+# ellos quedan cerca y los que casi no se conectan quedan en la orilla.
+# La semilla (seed) hace que el dibujo salga siempre igual cada vez que corremos.
+posiciones_de_nodos = nx.spring_layout(grafo_pases, seed=7, k=1.5)
+
+plt.figure(figsize=(14, 10))
+
+# Primero las flechas (los pases), en gris claro para que no tapen los nombres
+nx.draw_networkx_edges(
+    grafo_pases,
+    posiciones_de_nodos,
+    edge_color="gray",
+    alpha=0.25,
+    arrowsize=8,
+    width=0.7,
+)
+
+# Despues los circulos de los jugadores
+nx.draw_networkx_nodes(
+    grafo_pases,
+    posiciones_de_nodos,
+    node_size=tamanos_de_nodos,
+    node_color="#f58282",
+    alpha=0.9,
+)
+
+# Y al final el nombre de cada jugador encima de su circulo
+nx.draw_networkx_labels(
+    grafo_pases,
+    posiciones_de_nodos,
+    font_size=9,
+    font_weight="bold",
+)
+
+plt.title("Croacia - Grafo de pases completados en fase de grupos (Qatar 2022)", fontsize=14)
+plt.axis("off")
+plt.tight_layout()
+
+# Guardamos la imagen para poder usarla en la presentacion
+plt.savefig("grafo_croacia.png", dpi=150)
+plt.show()
