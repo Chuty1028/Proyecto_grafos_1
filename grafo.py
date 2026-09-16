@@ -34,7 +34,7 @@ print("Lista de jugadores:")
 for jugador in sorted(grafo_pases.nodes()):
     print(" -", jugador)
 
-# VISUALIZACION: dibujamos el grafo para poder presentarlo en clase
+# VISUALIZACION
 
 # El grado de un nodo es con cuantos companeros distintos esta conectado.
 # Lo usamos para el tamano del circulo: mientras mas conectado esta un
@@ -49,17 +49,24 @@ posiciones_de_nodos = nx.spring_layout(grafo_pases, seed=7, k=1.5)
 
 plt.figure(figsize=(14, 10))
 
-# Primero las flechas (los pases), en gris claro para que no tapen los nombres
+# Como el grafo es dirigido, la punta de la flecha tiene que verse bien:
+#   connectionstyle curva un poco cada arista, asi el pase de ida y el de
+#     vuelta entre dos jugadores no quedan encimados en la misma linea recta
+#   node_size le avisa a networkx que tan grande es cada circulo, para que
+#     la punta se detenga en la orilla del nodo y no quede escondida debajo
 nx.draw_networkx_edges(
     grafo_pases,
     posiciones_de_nodos,
     edge_color="gray",
-    alpha=0.25,
-    arrowsize=8,
-    width=0.7,
+    alpha=0.4,
+    width=0.8,
+    arrowsize=14,
+    arrowstyle="-|>",
+    connectionstyle="arc3,rad=0.12",
+    node_size=tamanos_de_nodos,
 )
 
-# Despues los circulos de los jugadores
+# circulos de los jugadores
 nx.draw_networkx_nodes(
     grafo_pases,
     posiciones_de_nodos,
@@ -68,7 +75,7 @@ nx.draw_networkx_nodes(
     alpha=0.9,
 )
 
-# Y al final el nombre de cada jugador encima de su circulo
+# nombre de cada jugador encima de su circulo
 nx.draw_networkx_labels(
     grafo_pases,
     posiciones_de_nodos,
@@ -80,6 +87,6 @@ plt.title("Croacia - Grafo de pases completados en fase de grupos (Qatar 2022)",
 plt.axis("off")
 plt.tight_layout()
 
-# Guardamos la imagen para poder usarla en la presentacion
+# Guardamos la imagen
 plt.savefig("grafo_croacia.png", dpi=150)
 plt.show()
