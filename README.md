@@ -103,10 +103,3 @@ El primer script lee `datos_croacia/pases_croacia.csv` y genera
 `pases_limpios.csv`. El segundo lee ese archivo, construye el grafo,
 imprime el resumen en la terminal y guarda la imagen final en
 `grafo_croacia.png`.
-
-## Próximos pasos
-
-Falta la parte más importante del proyecto: la interpretación futbolística
-del grafo (quiénes son los jugadores más conectados, qué dice eso del
-estilo de juego de Croacia en la fase de grupos, etc.), que se preparará
-de cara a la presentación en clase.
