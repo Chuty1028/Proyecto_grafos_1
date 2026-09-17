@@ -153,14 +153,22 @@ plt.savefig("grafo_croacia.png", dpi=150)
 # matplotlib limpia el lienzo y guardaria una imagen en blanco
 plt.show()
 
-
-
-
 '''
-import csv
-from collections import Counter
-conteo_dados = Counter()
-with open('pases_limpios.csv', encoding='utf-8') as f:
-    for row in csv.DictReader(f):
-        conteo_dados[row['nombre_de_jugador']] += 1
+# PASO 11: CONTAR CUANTOS PASES DIO CADA JUGADOR
+
+# Aca no hace falta volver a abrir el csv: "tabla_pases" ya lo tiene cargado
+# desde el paso 1. Entre corchetes va el nombre de la COLUMNA, nunca el de un
+# jugador, y "jugador_nombre" es la columna del que DA el pase. Eso agarra la
+# columna entera, los 1502 nombres uno debajo del otro
+columna_del_que_pasa = tabla_pases["jugador_nombre"]
+
+# "value_counts" es contar valores: recorre esa columna y cuenta cuantas veces
+# aparece cada nombre, ya ordenados de mayor a menor
+pases_dados_por_jugador = columna_del_que_pasa.value_counts()
+
+# Esto sale en la terminal hasta que cierres la ventana del grafo, porque
+# "plt.show()" de arriba deja el programa detenido ahi esperando
+print()
+print("Pases dados por jugador:")
+print(pases_dados_por_jugador)
 '''
