@@ -152,3 +152,15 @@ plt.savefig("grafo_croacia.png", dpi=150)
 # "plt.show" abre la ventana para verlo. Va DESPUES de savefig: al reves
 # matplotlib limpia el lienzo y guardaria una imagen en blanco
 plt.show()
+
+
+
+
+'''
+import csv
+from collections import Counter
+conteo_dados = Counter()
+with open('pases_limpios.csv', encoding='utf-8') as f:
+    for row in csv.DictReader(f):
+        conteo_dados[row['nombre_de_jugador']] += 1
+'''
